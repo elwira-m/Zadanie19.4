@@ -11,34 +11,51 @@ function comments(state = [], action) {
                 id: action.id,
                 text: action.text,
                 votes: 0
-            }
-            , ...state.comments];
+            }, ...state.comments];
 				
 	case REMOVE_COMMENT:
-		return comments: state.comments.filter(comment => comment.id !== action.id) ;
+	    return comments: state.comments.filter(comment => comment.id !==action.id);
 		
+		/*case EDIT_COMMENT:
+			return [{
+				state.comments.map(comment => comment.id === action.id), 
+                text: action.text,
+                votes: votes
+			}];*/
+			
 	case EDIT_COMMENT:
-		return [{
-			state.comments.map(comment => comment.id === action.id), 
-               		 text: action.text,
-               		 votes: votes
-		}];
+	    return state.map(comment => {
+                if(comment.id === action.id) {
+                    return {...comment,	text: comment.text}         //czy action.text?
+                }
+                     return comment;                                  //bez else?
+            });
+		
+		/*case THUMB_UP_COMMENT:
+			return [{
+				state.comments.map(comment => comment.id === action.id),
+				text: text,
+				votes: votes + 1
+			}];*/
 		
 	case THUMB_UP_COMMENT:
-		return [{
-			state.comments.map(comment => comment.id === action.id),
-			text: text,
-			votes: votes + 1
-		}];
-		
+            return state.map(comment => {
+                if(comment.id === action.id) {
+			return {...comment, votes: comment.votes + 1}
+                }
+			return comment;
+            });
+        		
 	case THUMB_DOWN_COMMENT:
-		return [{
-			state.comments.map(comment => comment.id === action.id),
-			text: text,
-			votes: votes - 1
-		}];
-	default: 
-		return state;
+	    return state.map(comment => {
+                if(comment.id === action.id) {
+			return {...comment, votes: comment.votes - 1}
+                }
+			return comment;
+            });
+			
+        default:
+            return state;
     }
 };
 
