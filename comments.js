@@ -11,10 +11,10 @@ function comments(state = [], action) {
                 id: action.id,
                 text: action.text,
                 votes: 0
-            }, ...state.comments];
+            }, ...state];
 				
 	case REMOVE_COMMENT:
-	    return comments: state.comments.filter(comment => comment.id !==action.id);
+	    return state.filter(comment => comment.id !==action.id);
 		
 		/*case EDIT_COMMENT:
 			return [{
@@ -26,7 +26,7 @@ function comments(state = [], action) {
 	case EDIT_COMMENT:
 	    return state.map(comment => {
                 if(comment.id === action.id) {
-                    return {...comment,	text: comment.text}         //czy action.text?
+                    return {...comment,	text: action.text}         //czy action.text?
                 }
                      return comment;                                  //bez else?
             });
